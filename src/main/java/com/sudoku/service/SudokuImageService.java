@@ -31,30 +31,6 @@ public class SudokuImageService {
         nu.pattern.OpenCV.loadLocally();
     }
 
-    /**
-     * Extracts a Sudoku board from an image in the clipboard.
-     *
-     * @return the extracted Sudoku board
-     * @throws RuntimeException if the extraction fails
-     */
-    public SudokuBoard extractBoardFromClipboard() {
-        try {
-            // Get image from clipboard
-            BufferedImage clipboardImage = getImageFromClipboard();
-            if (clipboardImage == null) {
-                throw new RuntimeException("No image found in clipboard. Please copy a Sudoku puzzle screenshot to your clipboard first.");
-            }
-
-            // Process image to get the board
-            int[][] board = extractBoardFromImage(clipboardImage);
-            return new SudokuBoard(board);
-        } catch (RuntimeException e) {
-            // Don't wrap RuntimeExceptions that already have detailed messages
-            throw e;
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to extract Sudoku board from clipboard: " + e.getMessage(), e);
-        }
-    }
 
     /**
      * Extracts a Sudoku board from an image provided as a base64 string.
@@ -122,68 +98,6 @@ public class SudokuImageService {
         }
     }
 
-    /**
-     * Gets an image from the system clipboard.
-     *
-     * @return the image from the clipboard, or null if no image is available
-     * @throws RuntimeException with a detailed message if clipboard access fails
-     */
-    private BufferedImage getImageFromClipboard() {
-        // Check if we're running in a headless environment
-        if (java.awt.GraphicsEnvironment.isHeadless()) {
-            throw new RuntimeException("Cannot access clipboard in headless environment");
-        }
-
-        try {
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-            // Check if clipboard is accessible
-            if (clipboard == null) {
-                throw new RuntimeException("System clipboard is not accessible");
-            }
-
-            // Check if clipboard contains an image
-            if (!clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor)) {
-                return null; // No image in clipboard, will be handled by caller
-            }
-
-            try {
-                // Get the image data
-                Image image = (Image) clipboard.getData(DataFlavor.imageFlavor);
-
-                // Check if image is valid
-                if (image == null) {
-                    throw new RuntimeException("Retrieved null image from clipboard");
-                }
-
-                // Get image dimensions
-                int width = image.getWidth(null);
-                int height = image.getHeight(null);
-
-                // Check if dimensions are valid
-                if (width <= 0 || height <= 0) {
-                    throw new RuntimeException("Invalid image dimensions: " + width + "x" + height);
-                }
-
-                // Convert to BufferedImage
-                BufferedImage bufferedImage = new BufferedImage(
-                    width,
-                    height,
-                    BufferedImage.TYPE_INT_RGB
-                );
-                bufferedImage.getGraphics().drawImage(image, 0, 0, null);
-                return bufferedImage;
-            } catch (java.awt.datatransfer.UnsupportedFlavorException e) {
-                throw new RuntimeException("Clipboard contains image data in an unsupported format", e);
-            } catch (java.io.IOException e) {
-                throw new RuntimeException("I/O error while reading image from clipboard", e);
-            }
-        } catch (SecurityException e) {
-            throw new RuntimeException("Security restrictions prevent clipboard access", e);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to get image from clipboard: " + e.getMessage(), e);
-        }
-    }
 
     /**
      * Extracts a Sudoku board from an image.

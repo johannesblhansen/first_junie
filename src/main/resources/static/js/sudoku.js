@@ -258,53 +258,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 showStatus(errorMessage, 'error');
 
-                // Fall back to server-side clipboard extraction if available
-                if (errorMessage.includes('Permission denied') || 
-                    errorMessage.includes('NotAllowedError') ||
-                    errorMessage.includes('No image found in clipboard')) {
-                    fallbackToServerClipboard();
-                }
             });
     }
 
-    /**
-     * Falls back to server-side clipboard extraction
-     */
-    function fallbackToServerClipboard() {
-        showStatus('Trying server-side clipboard extraction... This uses the server to access your clipboard.', '');
-
-        fetch('/api/sudoku/extract-from-clipboard')
-            .then(response => {
-                if (!response.ok) {
-                    return response.text().then(text => {
-                        throw new Error(text);
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                updateGrid(data.board);
-                showStatus('Sudoku board extracted from clipboard (server-side)', 'success');
-            })
-            .catch(error => {
-                let errorMessage = 'Failed to extract Sudoku board from clipboard';
-
-                // Try to extract the error message from the response
-                try {
-                    const errorObj = JSON.parse(error.message);
-                    if (errorObj.message) {
-                        errorMessage = errorObj.message;
-                    }
-                } catch (e) {
-                    // If parsing fails, use the error message as is
-                    if (error.message) {
-                        errorMessage = error.message;
-                    }
-                }
-
-                showStatus(errorMessage, 'error');
-            });
-    }
 
     /**
      * Converts a Blob to a base64 string

@@ -8,7 +8,6 @@ A web application that solves Sudoku puzzles. Input an unsolved Sudoku puzzle, a
 - **REST API**: Backend API for programmatic access to the Sudoku solver
 - **Validation**: Validates input puzzles to ensure they are valid Sudoku boards
 - **Image Processing**: Extract Sudoku puzzles from images using OCR (requires Tesseract)
-- **Clipboard Support**: Import puzzles directly from clipboard images
 - **Responsive Design**: Works on both desktop and mobile devices
 
 ## Technologies Used
@@ -89,6 +88,7 @@ If the bundled libraries don't work on your system, you can still install Tesser
 4. Click "Solve" to find the solution
 5. Click "Clear" to reset the grid
 6. Click "Load Example" to load a sample puzzle
+7. Click "Extract from Clipboard" to extract a Sudoku puzzle from a screenshot in your clipboard (requires a modern browser with Clipboard API support and an image of a Sudoku puzzle in your clipboard)
 
 ### REST API
 
@@ -133,31 +133,6 @@ If the bundled libraries don't work on your system, you can still install Tesser
 **Error Responses**:
 - 400 Bad Request: If the board is invalid or unsolvable
 
-#### Extract a Sudoku Board from Clipboard
-
-**Endpoint**: `GET /api/sudoku/extract-from-clipboard`
-
-**Request Body**: None
-
-**Response** (200 OK):
-```json
-{
-  "board": [
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-  ]
-}
-```
-
-**Error Responses**:
-- 500 Internal Server Error: If no image is found in clipboard or OCR fails
 
 #### Extract a Sudoku Board from Image
 
@@ -191,64 +166,6 @@ If the bundled libraries don't work on your system, you can still install Tesser
 - 400 Bad Request: If no image data is provided
 - 500 Internal Server Error: If OCR fails
 
-#### Solve a Sudoku Board from Clipboard
-
-**Endpoint**: `GET /api/sudoku/solve-from-clipboard`
-
-**Request Body**: None
-
-**Response** (200 OK):
-```json
-{
-  "board": [
-    [5, 3, 4, 6, 7, 8, 9, 1, 2],
-    [6, 7, 2, 1, 9, 5, 3, 4, 8],
-    [1, 9, 8, 3, 4, 2, 5, 6, 7],
-    [8, 5, 9, 7, 6, 1, 4, 2, 3],
-    [4, 2, 6, 8, 5, 3, 7, 9, 1],
-    [7, 1, 3, 9, 2, 4, 8, 5, 6],
-    [9, 6, 1, 5, 3, 7, 2, 8, 4],
-    [2, 8, 7, 4, 1, 9, 6, 3, 5],
-    [3, 4, 5, 2, 8, 6, 1, 7, 9]
-  ]
-}
-```
-
-**Error Responses**:
-- 400 Bad Request: If the extracted board is unsolvable
-- 500 Internal Server Error: If no image is found in clipboard or OCR fails
-
-#### Solve a Sudoku Board from Image
-
-**Endpoint**: `POST /api/sudoku/solve-from-image`
-
-**Request Body**:
-```json
-{
-  "image": "base64_encoded_image_data"
-}
-```
-
-**Response** (200 OK):
-```json
-{
-  "board": [
-    [5, 3, 4, 6, 7, 8, 9, 1, 2],
-    [6, 7, 2, 1, 9, 5, 3, 4, 8],
-    [1, 9, 8, 3, 4, 2, 5, 6, 7],
-    [8, 5, 9, 7, 6, 1, 4, 2, 3],
-    [4, 2, 6, 8, 5, 3, 7, 9, 1],
-    [7, 1, 3, 9, 2, 4, 8, 5, 6],
-    [9, 6, 1, 5, 3, 7, 2, 8, 4],
-    [2, 8, 7, 4, 1, 9, 6, 3, 5],
-    [3, 4, 5, 2, 8, 6, 1, 7, 9]
-  ]
-}
-```
-
-**Error Responses**:
-- 400 Bad Request: If no image data is provided or the extracted board is unsolvable
-- 500 Internal Server Error: If OCR fails
 
 ## How It Works
 

@@ -57,24 +57,6 @@ public class SudokuController {
         return ResponseEntity.ok(new SudokuBoard(boardCopy));
     }
 
-    /**
-     * Extracts a Sudoku board from an image in the clipboard.
-     *
-     * @return the extracted Sudoku board
-     */
-    @GetMapping("/extract-from-clipboard")
-    public ResponseEntity<SudokuBoard> extractFromClipboard() {
-        try {
-            SudokuBoard board = sudokuImageService.extractBoardFromClipboard();
-            return ResponseEntity.ok(board);
-        } catch (RuntimeException e) {
-            // Pass through the original error message without wrapping it
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, 
-                "An unexpected error occurred while extracting the Sudoku board");
-        }
-    }
 
     /**
      * Extracts a Sudoku board from an image provided as base64 data.
@@ -103,81 +85,6 @@ public class SudokuController {
         }
     }
 
-    /**
-     * Extracts a Sudoku board from the clipboard and solves it.
-     *
-     * @return the solved Sudoku board
-     */
-    @GetMapping("/solve-from-clipboard")
-    public ResponseEntity<SudokuBoard> solveFromClipboard() {
-        try {
-            // Extract board from clipboard
-            SudokuBoard board = sudokuImageService.extractBoardFromClipboard();
-
-            // Create a copy of the board to avoid modifying the input
-            int[][] boardCopy = deepCopyBoard(board.getBoard());
-
-            // Solve the puzzle
-            boolean solved = sudokuSolver.solve(boardCopy);
-
-            if (!solved) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsolvable Sudoku puzzle");
-            }
-
-            return ResponseEntity.ok(new SudokuBoard(boardCopy));
-        } catch (ResponseStatusException e) {
-            // Pass through existing ResponseStatusExceptions
-            throw e;
-        } catch (RuntimeException e) {
-            // Pass through RuntimeExceptions with their original message
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        } catch (Exception e) {
-            // Generic message for other exceptions
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, 
-                "An unexpected error occurred while solving the Sudoku board");
-        }
-    }
-
-    /**
-     * Extracts a Sudoku board from an image provided as base64 data and solves it.
-     *
-     * @param requestBody a map containing the base64-encoded image data
-     * @return the solved Sudoku board
-     */
-    @PostMapping("/solve-from-image")
-    public ResponseEntity<SudokuBoard> solveFromImage(@RequestBody Map<String, String> requestBody) {
-        try {
-            String base64Image = requestBody.get("image");
-            if (base64Image == null || base64Image.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No image data provided");
-            }
-
-            // Extract board from image
-            SudokuBoard board = sudokuImageService.extractBoardFromBase64Image(base64Image);
-
-            // Create a copy of the board to avoid modifying the input
-            int[][] boardCopy = deepCopyBoard(board.getBoard());
-
-            // Solve the puzzle
-            boolean solved = sudokuSolver.solve(boardCopy);
-
-            if (!solved) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsolvable Sudoku puzzle");
-            }
-
-            return ResponseEntity.ok(new SudokuBoard(boardCopy));
-        } catch (ResponseStatusException e) {
-            // Pass through existing ResponseStatusExceptions
-            throw e;
-        } catch (RuntimeException e) {
-            // Pass through RuntimeExceptions with their original message
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        } catch (Exception e) {
-            // Generic message for other exceptions
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, 
-                "An unexpected error occurred while solving the Sudoku board");
-        }
-    }
 
     /**
      * Creates a deep copy of the Sudoku board.
