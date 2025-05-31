@@ -1,0 +1,171 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+#clear-btn {
+    background-color: #e74c3c;
+}
+
+#clear-btn:hover {
+    background-color: #c0392b;
+}
+
+#example-btn {
+    background-color: #2ecc71;
+}
+
+#example-btn:hover {
+    background-color: #27ae60;
+}
+
+/* Status Message */
+.status-message {
+    text-align: center;
+    margin-bottom: 20px;
+    min-height: 24px;
+    font-weight: bold;
+}
+
+.error {
+    color: #e74c3c;
+}
+
+.success {
+    color: #2ecc71;
+}
+
+/* Sudoku Grid */
+.sudoku-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 1px;
+    border: 2px solid #2c3e50;
+    width: 450px;
+    height: 450px;
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    border: 1px solid #bdc3c7;
+    position: relative;
+}
+
+.cell input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    text-align: center;
+    font-size: 20px;
+    background: transparent;
+}
+
+.cell input:focus {
+    outline: none;
+    background-color: #ecf0f1;
+}
+
+/* Add thicker borders for 3x3 boxes */
+.cell:nth-child(3n) {
+    border-right: 2px solid #2c3e50;
+}
+
+.cell:nth-child(9n) {
+    border-right: 2px solid #2c3e50;
+}
+
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: 2px solid #2c3e50;
+}
+
+/* Original numbers (pre-filled) */
+.original {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Solved numbers */
+.solved {
+    color: #3498db;
+}
+
+/* Instructions */
+.instructions {
+    background-color: #ecf0f1;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.instructions h2 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .sudoku-grid {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
+    }
+    
+    .cell input {
+        font-size: 16px;
+    }
+}
