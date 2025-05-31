@@ -1,26 +1,59 @@
 /* General Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f5f5f5;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     margin: 0;
     padding: 20px;
+    min-height: 100vh;
+    background-attachment: fixed;
 }
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 20px auto;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    border-top: 5px solid #3498db;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 h1 {
     text-align: center;
     color: #2c3e50;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 2.5rem;
+    position: relative;
+    padding-bottom: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    border-radius: 4px;
 }
 
 /* Controls */
@@ -29,6 +62,13 @@ h1 {
     justify-content: center;
     margin-bottom: 20px;
     gap: 10px;
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e3e8f0;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 button {
@@ -36,14 +76,55 @@ button {
     background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 button:hover {
     background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: scale(0.95) translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button click animation */
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+button:active::after {
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0) translate(-50%, -50%);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20) translate(-50%, -50%);
+        opacity: 0;
+    }
 }
 
 #clear-btn {
@@ -62,20 +143,57 @@ button:hover {
     background-color: #27ae60;
 }
 
+#clipboard-btn {
+    background-color: #9b59b6;
+}
+
+#clipboard-btn:hover {
+    background-color: #8e44ad;
+}
+
 /* Status Message */
 .status-message {
     text-align: center;
     margin-bottom: 20px;
     min-height: 24px;
-    font-weight: bold;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.status-message:not(:empty) {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .error {
-    color: #e74c3c;
+    color: #fff;
+    background-color: rgba(231, 76, 60, 0.9);
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
 }
 
 .success {
-    color: #2ecc71;
+    color: #fff;
+    background-color: rgba(46, 204, 113, 0.9);
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+    animation: pulse 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes shake {
+    10%, 90% { transform: translateX(-1px); }
+    20%, 80% { transform: translateX(2px); }
+    30%, 50%, 70% { transform: translateX(-4px); }
+    40%, 60% { transform: translateX(4px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 /* Sudoku Grid */
@@ -90,9 +208,13 @@ button:hover {
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(9, 1fr);
     gap: 1px;
-    border: 2px solid #2c3e50;
+    border: 3px solid #2c3e50;
     width: 450px;
     height: 450px;
+    background-color: #2c3e50;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .cell {
@@ -104,6 +226,11 @@ button:hover {
     cursor: pointer;
     border: 1px solid #bdc3c7;
     position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.cell:hover {
+    background-color: #f8f9fa;
 }
 
 .cell input {
@@ -111,22 +238,25 @@ button:hover {
     height: 100%;
     border: none;
     text-align: center;
-    font-size: 20px;
+    font-size: 22px;
+    font-weight: 500;
     background: transparent;
+    transition: all 0.3s ease;
 }
 
 .cell input:focus {
     outline: none;
-    background-color: #ecf0f1;
+    background-color: #e3f2fd;
+    transform: scale(1.05);
 }
 
-/* Add thicker borders for 3x3 boxes */
+/* Add thicker borders and styling for 3x3 boxes */
 .cell:nth-child(3n) {
     border-right: 2px solid #2c3e50;
 }
 
 .cell:nth-child(9n) {
-    border-right: 2px solid #2c3e50;
+    border-right: none;
 }
 
 .cell:nth-child(n+19):nth-child(-n+27),
@@ -134,27 +264,82 @@ button:hover {
     border-bottom: 2px solid #2c3e50;
 }
 
+/* Add subtle background color to alternate 3x3 boxes */
+.cell:nth-child(9n+1):nth-child(-n+9),
+.cell:nth-child(9n+1):nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(9n+1):nth-child(n+37):nth-child(-n+45),
+.cell:nth-child(9n+1):nth-child(n+55):nth-child(-n+63),
+.cell:nth-child(9n+4):nth-child(n+10):nth-child(-n+18),
+.cell:nth-child(9n+4):nth-child(n+28):nth-child(-n+36),
+.cell:nth-child(9n+4):nth-child(n+46):nth-child(-n+54),
+.cell:nth-child(9n+4):nth-child(n+64):nth-child(-n+72),
+.cell:nth-child(9n+7):nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(9n+7):nth-child(n+37):nth-child(-n+45),
+.cell:nth-child(9n+7):nth-child(n+55):nth-child(-n+63),
+.cell:nth-child(9n+7):nth-child(n+73):nth-child(-n+81) {
+    background-color: #f0f8ff;
+}
+
 /* Original numbers (pre-filled) */
 .original {
-    font-weight: bold;
+    font-weight: 700;
     color: #2c3e50;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 /* Solved numbers */
 .solved {
     color: #3498db;
+    font-weight: 500;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* Instructions */
 .instructions {
     background-color: #ecf0f1;
-    padding: 15px;
-    border-radius: 4px;
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid #3498db;
+}
+
+.instructions:hover {
+    transform: translateY(-5px);
 }
 
 .instructions h2 {
     margin-top: 0;
     color: #2c3e50;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.instructions h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #3498db;
+    border-radius: 3px;
+}
+
+.instructions p {
+    margin-bottom: 10px;
+    line-height: 1.7;
 }
 
 /* Responsive adjustments */
@@ -164,7 +349,7 @@ button:hover {
         height: auto;
         aspect-ratio: 1/1;
     }
-    
+
     .cell input {
         font-size: 16px;
     }
