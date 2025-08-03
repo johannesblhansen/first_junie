@@ -1,25 +1,29 @@
 /* General Styles */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&family=Poppins:wght@300;400;500;700&display=swap');
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #2d3436;
+    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
     margin: 0;
     padding: 20px;
     min-height: 100vh;
     background-attachment: fixed;
+    background-size: cover;
 }
 
 .container {
     max-width: 800px;
     margin: 20px auto;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 30px;
-    border-radius: 12px;
-    border-top: 5px solid #3498db;
+    border-radius: 16px;
+    border-top: 5px solid #6c5ce7;
     animation: fadeInUp 0.8s ease-out;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes fadeInUp {
@@ -35,13 +39,14 @@ body {
 
 h1 {
     text-align: center;
-    color: #2c3e50;
+    color: #6c5ce7;
     margin-bottom: 30px;
-    font-weight: 700;
-    font-size: 2.5rem;
+    font-weight: 900;
+    font-size: 2.8rem;
     position: relative;
     padding-bottom: 15px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 2px 2px 4px rgba(108, 92, 231, 0.2);
+    letter-spacing: -0.5px;
 }
 
 h1::after {
@@ -52,7 +57,7 @@ h1::after {
     transform: translateX(-50%);
     width: 100px;
     height: 4px;
-    background: linear-gradient(to right, #3498db, #2ecc71);
+    background: linear-gradient(to right, #6c5ce7, #00cec9);
     border-radius: 4px;
 }
 
@@ -60,41 +65,47 @@ h1::after {
 .controls {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-    gap: 10px;
-    background-color: #f0f8ff;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #e3e8f0;
+    margin-bottom: 30px;
+    gap: 12px;
+    background-color: rgba(236, 240, 241, 0.6);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #3498db;
+    padding: 12px 20px;
+    background-color: #6c5ce7;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
-    font-weight: 500;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
     position: relative;
     overflow: hidden;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 14px;
 }
 
 button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    background-color: #5b4cdb;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
 }
 
 button:active {
     transform: scale(0.95) translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.3);
 }
 
 /* Button click animation */
@@ -105,7 +116,7 @@ button::after {
     left: 50%;
     width: 5px;
     height: 5px;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.7);
     opacity: 0;
     border-radius: 100%;
     transform: scale(1, 1) translate(-50%, -50%);
@@ -113,55 +124,65 @@ button::after {
 }
 
 button:active::after {
-    animation: ripple 0.6s ease-out;
+    animation: ripple 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 @keyframes ripple {
     0% {
         transform: scale(0, 0) translate(-50%, -50%);
-        opacity: 0.5;
+        opacity: 0.7;
     }
     100% {
-        transform: scale(20, 20) translate(-50%, -50%);
+        transform: scale(25, 25) translate(-50%, -50%);
         opacity: 0;
     }
 }
 
 #clear-btn {
-    background-color: #e74c3c;
+    background-color: #ff7675;
 }
 
 #clear-btn:hover {
-    background-color: #c0392b;
+    background-color: #e84393;
+    box-shadow: 0 8px 25px rgba(232, 67, 147, 0.4);
 }
 
 #example-btn {
-    background-color: #2ecc71;
+    background-color: #00b894;
 }
 
 #example-btn:hover {
-    background-color: #27ae60;
+    background-color: #00cec9;
+    box-shadow: 0 8px 25px rgba(0, 206, 201, 0.4);
 }
 
 #clipboard-btn {
-    background-color: #9b59b6;
+    background-color: #fd79a8;
 }
 
 #clipboard-btn:hover {
-    background-color: #8e44ad;
+    background-color: #e84393;
+    box-shadow: 0 8px 25px rgba(232, 67, 147, 0.4);
 }
 
 /* Status Message */
 .status-message {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     min-height: 24px;
     font-weight: 600;
-    padding: 10px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
+    padding: 12px 20px;
+    border-radius: 12px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     opacity: 0;
     transform: translateY(-10px);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.5px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .status-message:not(:empty) {
@@ -171,23 +192,25 @@ button:active::after {
 
 .error {
     color: #fff;
-    background-color: rgba(231, 76, 60, 0.9);
-    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+    background-color: rgba(255, 118, 117, 0.9);
+    box-shadow: 0 8px 20px rgba(255, 118, 117, 0.3);
     animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    border-left: 4px solid #ff4757;
 }
 
 .success {
     color: #fff;
-    background-color: rgba(46, 204, 113, 0.9);
-    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+    background-color: rgba(0, 184, 148, 0.9);
+    box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
     animation: pulse 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-left: 4px solid #00cec9;
 }
 
 @keyframes shake {
-    10%, 90% { transform: translateX(-1px); }
-    20%, 80% { transform: translateX(2px); }
-    30%, 50%, 70% { transform: translateX(-4px); }
-    40%, 60% { transform: translateX(4px); }
+    10%, 90% { transform: translateX(-2px); }
+    20%, 80% { transform: translateX(3px); }
+    30%, 50%, 70% { transform: translateX(-5px); }
+    40%, 60% { transform: translateX(5px); }
 }
 
 @keyframes pulse {
@@ -200,7 +223,8 @@ button:active::after {
 .sudoku-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    position: relative;
 }
 
 .sudoku-grid {
@@ -208,13 +232,14 @@ button:active::after {
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(9, 1fr);
     gap: 1px;
-    border: 3px solid #2c3e50;
+    border: 3px solid #6c5ce7;
     width: 450px;
     height: 450px;
-    background-color: #2c3e50;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background-color: #6c5ce7;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(108, 92, 231, 0.3);
     overflow: hidden;
+    position: relative;
 }
 
 .cell {
@@ -224,13 +249,15 @@ button:active::after {
     background-color: #fff;
     font-size: 20px;
     cursor: pointer;
-    border: 1px solid #bdc3c7;
+    border: 1px solid rgba(189, 195, 199, 0.5);
     position: relative;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .cell:hover {
     background-color: #f8f9fa;
+    transform: scale(1.02);
+    z-index: 2;
 }
 
 .cell input {
@@ -239,20 +266,23 @@ button:active::after {
     border: none;
     text-align: center;
     font-size: 22px;
-    font-weight: 500;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
     background: transparent;
     transition: all 0.3s ease;
+    color: #2d3436;
 }
 
 .cell input:focus {
     outline: none;
-    background-color: #e3f2fd;
+    background-color: rgba(108, 92, 231, 0.1);
     transform: scale(1.05);
+    box-shadow: inset 0 0 0 2px #6c5ce7;
 }
 
 /* Add thicker borders and styling for 3x3 boxes */
 .cell:nth-child(3n) {
-    border-right: 2px solid #2c3e50;
+    border-right: 2px solid #6c5ce7;
 }
 
 .cell:nth-child(9n) {
@@ -261,7 +291,7 @@ button:active::after {
 
 .cell:nth-child(n+19):nth-child(-n+27),
 .cell:nth-child(n+46):nth-child(-n+54) {
-    border-bottom: 2px solid #2c3e50;
+    border-bottom: 2px solid #6c5ce7;
 }
 
 /* Add subtle background color to alternate 3x3 boxes */
@@ -277,27 +307,27 @@ button:active::after {
 .cell:nth-child(9n+7):nth-child(n+37):nth-child(-n+45),
 .cell:nth-child(9n+7):nth-child(n+55):nth-child(-n+63),
 .cell:nth-child(9n+7):nth-child(n+73):nth-child(-n+81) {
-    background-color: #f0f8ff;
+    background-color: rgba(236, 240, 241, 0.7);
 }
 
 /* Original numbers (pre-filled) */
 .original {
     font-weight: 700;
-    color: #2c3e50;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    color: #6c5ce7;
+    text-shadow: 0 1px 2px rgba(108, 92, 231, 0.2);
 }
 
 /* Solved numbers */
 .solved {
-    color: #3498db;
-    font-weight: 500;
-    animation: fadeIn 0.5s ease-in-out;
+    color: #00cec9;
+    font-weight: 600;
+    animation: fadeIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: scale(0.8);
+        transform: scale(0.7);
     }
     to {
         opacity: 1;
@@ -307,23 +337,38 @@ button:active::after {
 
 /* Instructions */
 .instructions {
-    background-color: #ecf0f1;
+    background-color: rgba(236, 240, 241, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     padding: 20px;
-    border-radius: 8px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-left: 4px solid #3498db;
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-left: 5px solid #6c5ce7;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
 }
 
-.instructions:hover {
-    transform: translateY(-5px);
+.instructions::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, #6c5ce7, #00cec9);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .instructions h2 {
     margin-top: 0;
-    color: #2c3e50;
-    font-weight: 600;
+    color: #6c5ce7;
+    font-weight: 700;
     position: relative;
     padding-bottom: 10px;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
 }
 
 .instructions h2::after {
@@ -331,26 +376,93 @@ button:active::after {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 50px;
+    width: 60px;
     height: 3px;
-    background-color: #3498db;
+    background: linear-gradient(to right, #6c5ce7, #00cec9);
     border-radius: 3px;
 }
 
 .instructions p {
-    margin-bottom: 10px;
-    line-height: 1.7;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    color: #2d3436;
+    font-size: 0.9rem;
+}
+
+.instructions p:last-child {
+    margin-bottom: 0;
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    .controls {
+        flex-wrap: wrap;
+    }
+
     .sudoku-grid {
         width: 100%;
+        max-width: 450px;
         height: auto;
         aspect-ratio: 1/1;
     }
 
     .cell input {
         font-size: 16px;
+    }
+
+    .instructions {
+        padding: 20px;
+    }
+
+    .instructions h2 {
+        font-size: 1.3rem;
+    }
+
+    .instructions p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    button {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+
+    .status-message {
+        max-width: 95%;
+        padding: 10px 15px;
+    }
+
+    .instructions {
+        padding: 15px;
+    }
+
+    .instructions h2 {
+        font-size: 1.2rem;
+        padding-bottom: 8px;
+    }
+
+    .instructions p {
+        font-size: 0.8rem;
+        line-height: 1.4;
+        margin-bottom: 6px;
     }
 }
